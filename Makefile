@@ -41,7 +41,7 @@ clean :
 	@make clean -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_DIR)
 
-fclean :
+fclean : clean
 	@make fclean -C $(LIBFT_DIR)
 	@rm $(NAME)
 	@rm $(HOSTLIB)
