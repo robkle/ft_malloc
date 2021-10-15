@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/17 12:42:24 by rklein            #+#    #+#             */
-/*   Updated: 2019/10/29 17:00:50 by rklein           ###   ########.fr       */
+/*   Created: 2021/10/15 15:43:52 by rklein            #+#    #+#             */
+/*   Updated: 2021/10/15 15:44:53 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcpy(char *dst, const char *src)
-{
-	int	i;
+#include "ft_malloc.h"
 
-	i = 0;
-	while (src[i])
+void	ft_putstr(char const *s)
+{
+	if (s)
 	{
-		dst[i] = src[i];
-		i++;
+		while (*s)
+		{
+			write(1, &*s, 1);
+			s++;
+		}
 	}
-	dst[i] = '\0';
-	return (dst);
 }

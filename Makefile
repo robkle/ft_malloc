@@ -5,9 +5,17 @@ endif
 NAME := libft_malloc.so
 HOSTLIB := libft_malloc_$(HOSTTYPE).so
 FLAGS := -Wall -Wextra -Werror -fPIC
-INC := -Iincludes/ -Ilibft
-LIBFT_DIR := ./libft/
-LIB := -lpthread -Llibft -lft
+INC := -Iincludes/
+LIB := -lpthread
+UTIL_DIR := utils
+UTIL_FILE := ft_memcpy.c 
+UTIL_FILE += ft_memmove.c 
+UTIL_FILE += ft_memset.c 
+UTIL_FILE += ft_putchar.c 
+UTIL_FILE += ft_puthex.c 
+UTIL_FILE += ft_putsize.c 
+UTIL_FILE += ft_putstr.c
+UTIL := $(addprefix $(UTIL_DIR)/,$(UTIL_FILE)) 
 SRC_DIR := src
 SRC_FILE := defragment.c
 SRC_FILE += free.c 
@@ -18,17 +26,15 @@ SRC_FILE += map.c
 SRC_FILE += realloc.c 
 SRC_FILE += show.c 
 SRC_FILE += unmap.c
+SRC_FILE += $(UTIL)
 SRC := $(addprefix $(SRC_DIR)/,$(SRC_FILE))
 OBJ_DIR := objects
 OBJ	:= $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o)) 
 
-all : mkdir lft $(NAME)
+all : mkdir $(NAME)
 
 mkdir :
 	@mkdir -p $(OBJ_DIR)
-
-lft :
-	@make -C $(LIBFT_DIR)
 
 $(NAME) : $(OBJ)
 	@gcc -shared -fPIC $(addprefix $(OBJ_DIR)/, $(notdir $(OBJ))) $(INC) $(LIB) -o $(HOSTLIB)
@@ -38,11 +44,9 @@ $(OBJ_DIR)/%.o: %.c
 	@gcc -fPIC $(INC) -c $< -o $(OBJ_DIR)/$(notdir $@)
 
 clean :
-	@make clean -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_DIR)
 
 fclean : clean
-	@make fclean -C $(LIBFT_DIR)
 	@rm $(NAME)
 	@rm $(HOSTLIB)
 

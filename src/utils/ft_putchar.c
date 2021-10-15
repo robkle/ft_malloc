@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/19 17:58:39 by rklein            #+#    #+#             */
-/*   Updated: 2019/10/25 14:27:39 by rklein           ###   ########.fr       */
+/*   Created: 2021/10/15 15:44:19 by rklein            #+#    #+#             */
+/*   Updated: 2021/10/15 15:44:31 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_malloc.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	ft_putchar(char c)
 {
-	unsigned char	*str;
-	size_t			i;
-
-	str = (unsigned char*)b;
-	i = 0;
-	while (i < len)
-	{
-		str[i] = c;
-		i++;
-	}
-	return (b);
+	write(1, &c, 1);
 }

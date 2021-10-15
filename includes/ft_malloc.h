@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 10:55:50 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 13:08:39 by rklein           ###   ########.fr       */
+/*   Updated: 2021/10/15 16:49:36 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <sys/mman.h>
 # include <sys/resource.h>
 # include <pthread.h>
-# include "../libft/libft.h"
 
 //# define PAGE getpagesize()
 # define PAGE 4096
@@ -101,5 +100,16 @@ void			*ft_realloc(void *ptr, size_t size);
 */
 void			print_alloc_mem(char *zone, unsigned long *mem, size_t *total);
 void			show_alloc_mem(void);
+
+/*
+** UTILS
+*/
+void			*ft_memcpy(void *dst, const void *src, size_t n);
+void			*ft_memmove(void *dst, const void *src, size_t len);
+void			*ft_memset(void *b, int c, size_t len);
+void			ft_putchar(char c);
+void			ft_puthex(unsigned long value);
+void			ft_putsize(size_t n);
+void			ft_putstr(char const *s);
 
 #endif

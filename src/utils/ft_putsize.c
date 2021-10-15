@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/21 09:10:23 by rklein            #+#    #+#             */
-/*   Updated: 2019/10/30 17:53:23 by rklein           ###   ########.fr       */
+/*   Created: 2021/10/15 15:45:12 by rklein            #+#    #+#             */
+/*   Updated: 2021/10/15 15:51:09 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_malloc.h"
 
-void	ft_putstr(char const *s)
+void	ft_putsize(size_t n)
 {
-	if (s)
-	{
-		while (*s)
-		{
-			write(1, &*s, 1);
-			s++;
-		}
-	}
+	if (n >= 10)
+		ft_putsize(n / 10);
+	ft_putchar(n % 10 + '0');
 }

@@ -6,11 +6,37 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:05:49 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 13:30:23 by rklein           ###   ########.fr       */
+/*   Updated: 2021/10/15 16:46:32 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+#include <stdio.h>
+
+void	print_zone(char *zone, unsigned long *start)
+{
+	ft_putstr(zone);
+	write(1, " : ", 3);
+	ft_puthex((unsigned long)start + *(start + 1));
+	write(1, "\n", 1);
+}
+
+void	print_block(unsigned long *block)
+{
+	ft_puthex(*(block + 2));
+	ft_putstr(" - ");
+	ft_puthex(*(block + 2) + *block);
+	ft_putstr(" : ");
+	ft_putsize(*block);
+	ft_putstr(" bytes\n");
+}
+
+void	print_total(size_t total)
+{
+	ft_putstr("Total : ");
+	ft_putsize(total);
+	ft_putstr(" bytes\n");
+}
 
 void	print_alloc_mem(char *zone, unsigned long *mem, size_t *total)
 {
@@ -22,14 +48,13 @@ void	print_alloc_mem(char *zone, unsigned long *mem, size_t *total)
 	current = mem;
 	while (current)
 	{
-		ft_printf("%s : %#lx\n", zone, (unsigned long)current + *(current + 1));
+		print_zone(zone, current);
 		block = current + 3;
 		while (*(block + 1) != TAIL)
 		{
 			if (*(block + 1) == INUSE)
 			{
-				ft_printf("%#lx - %#lx : %lu bytes\n", \
-						*(block + 2), *(block + 2) + *block, *block);
+				print_block(block);
 				*total += *block;
 			}
 			block += 3;
@@ -46,5 +71,5 @@ void	show_alloc_mem(void)
 	print_alloc_mem("TINY", g_zone.tiny, &total);
 	print_alloc_mem("SMALL", g_zone.small, &total);
 	print_alloc_mem("LARGE", g_zone.large, &total);
-	ft_printf("Total : %lu bytes\n", total);
+	print_total(total);
 }

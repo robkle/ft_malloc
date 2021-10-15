@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strclr.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rklein <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/21 14:03:58 by rklein            #+#    #+#             */
-/*   Updated: 2019/10/22 15:54:47 by rklein           ###   ########.fr       */
+/*   Created: 2021/10/15 15:41:41 by rklein            #+#    #+#             */
+/*   Updated: 2021/10/15 15:41:54 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_malloc.h"
 
-void	ft_strclr(char *s)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	while (s != NULL && *s)
+	unsigned char	*str;
+	size_t			i;
+
+	str = (unsigned char*)b;
+	i = 0;
+	while (i < len)
 	{
-		*s = '\0';
-		s++;
+		str[i] = c;
+		i++;
 	}
+	return (b);
 }
