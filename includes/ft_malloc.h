@@ -1,41 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_malloc.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/15 10:55:50 by rklein            #+#    #+#             */
+/*   Updated: 2021/10/15 13:08:39 by rklein           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_MALLOC_H
 # define FT_MALLOC_H
 
 # include <unistd.h>
 # include <stdint.h>
 # include <sys/mman.h>
+# include <sys/resource.h>
 # include <pthread.h>
 # include "../libft/libft.h"
 
-# define PAGE getpagesize()
+//# define PAGE getpagesize()
+# define PAGE 4096
 # define TINY 256
 # define SMALL PAGE
-# define N TINY * 256 //65536 (32768 meta 32768 memory)
-# define M SMALL * 140 //573440 (49152 meta 524288 memory) 
-# define SIZE_PTR sizeof(unsigned long*)
+//# define N TINY * 256 //65536 (32768 meta 32768 memory)
+//# define M SMALL * 140 //573440 (49152 meta 524288 memory) 
+# define N 65536
+# define M 573440 
 # define FREE 0
 # define INUSE 1
 # define TAIL 2
 
-typedef struct			s_zone
+typedef struct s_zone
 {
 	unsigned long		*tiny;
 	unsigned long		*small;
 	unsigned long		*large;
-}						t_zone;
+}			t_zone;
 
-t_zone					g_zone;
+t_zone			g_zone;
 
 /*
 ** malloc.c
 */
 void			*ft_malloc(size_t size);
+void			ft_get_zone(size_t size, size_t *map_size, \
+					unsigned long ***mem);
 void			*ft_add_block(unsigned long **mem, size_t size, \
 					size_t map_size);
 void			*ft_append_block(unsigned long **mem, unsigned long **block, \
 					size_t size, size_t map_size);
 void			*ft_insert_block(unsigned long **mem, unsigned long **block, \
 				size_t size);
+
+/*
+** limit.c
+*/
+int			ft_size_limit(size_t size);
 
 /*
 ** map.c
@@ -78,6 +100,6 @@ void			*ft_realloc(void *ptr, size_t size);
 ** show.c
 */
 void			print_alloc_mem(char *zone, unsigned long *mem, size_t *total);
-void			show_alloc_mem();
+void			show_alloc_mem(void);
 
 #endif

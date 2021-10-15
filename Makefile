@@ -11,6 +11,7 @@ LIB := -lpthread -Llibft -lft
 SRC_DIR := src
 SRC_FILE := defragment.c
 SRC_FILE += free.c 
+SRC_FILE += limit.c 
 SRC_FILE += locate.c 
 SRC_FILE += malloc.c 
 SRC_FILE += map.c 

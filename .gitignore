@@ -1,2 +1,4 @@
 compile.sh
-backup/
+main.c
+test
+a.out

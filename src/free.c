@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/14 13:04:18 by rklein            #+#    #+#             */
+/*   Updated: 2021/10/14 13:27:48 by rklein           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_malloc.h"
 
 void	ft_free_block(unsigned long	*ptr)
@@ -8,8 +20,8 @@ void	ft_free_block(unsigned long	*ptr)
 	block_size = ptr - 2;
 	block_state = ptr - 1;
 	*block_state = FREE;
-	*block_size = (*block_size + 31) & -32; //REAL SIZE
-	ft_memset((void*)*ptr, 0, *block_size);
+	*block_size = (*block_size + 31) & -32;
+	ft_memset((void *)*ptr, 0, *block_size);
 }
 
 void	ft_free(void *ptr)
@@ -18,10 +30,12 @@ void	ft_free(void *ptr)
 	unsigned long	*meta;
 
 	if (!ptr)
-		return;
-	if ((map = ft_find_map(ptr)))
+		return ;
+	map = ft_find_map(ptr);
+	if (map)
 	{
-		if ((meta = ft_valid_ptr(&map, ptr)))
+		meta = ft_valid_ptr(&map, ptr);
+		if (meta)
 		{
 			ft_free_block(meta);
 			ft_defragment(&map);

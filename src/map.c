@@ -1,7 +1,18 @@
-#include "ft_malloc.h"
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/14 13:05:03 by rklein            #+#    #+#             */
+/*   Updated: 2021/10/15 10:17:12 by rklein           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	ft_initiate_page(unsigned long **mem, size_t map_size)//SAFE VERSION
+#include "ft_malloc.h"
+
+void	ft_initiate_page(unsigned long **mem, size_t map_size)
 {
 	*mem = mmap(NULL, map_size, PROT_READ | PROT_WRITE, \
 		MAP_ANON | MAP_PRIVATE, -1, 0);
@@ -16,17 +27,12 @@ void	ft_initiate_page(unsigned long **mem, size_t map_size)//SAFE VERSION
 	*(*mem + 3) = (unsigned long)(map_size - (*(*mem + 1)));
 	*(*mem + 4) = (unsigned long)TAIL;
 	*(*mem + 5) = (unsigned long)*mem + *(*mem + 1);
-	/*printf("map size: %lu\n", **mem);
-	printf("meta size: %lu\n", *(*mem + 1));
-	printf("block size: %lu\n", *(*mem + 3));
-	printf("block ptr: %#lx\n", *(*mem + 5));
-	printf("size check: %lu\n",*(*mem + 5) - (unsigned long)*mem);*/
 }
 
-void	ft_append_page(unsigned long **mem, size_t map_size)//SAFE VERSION
+void	ft_append_page(unsigned long **mem, size_t map_size)
 {
 	unsigned long	*new;
-	
+
 	ft_initiate_page(&new, map_size);
 	*(*mem + 2) = (unsigned long)new;
 }

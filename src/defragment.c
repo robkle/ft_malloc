@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   defragment.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/14 13:03:51 by rklein            #+#    #+#             */
+/*   Updated: 2021/10/14 13:23:53 by rklein           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_malloc.h"
 #include <stdio.h>
 
@@ -12,14 +24,16 @@ void	ft_defragment(unsigned long **map)
 	{
 		next_block_state = block_state + 3;
 		block_size = block_state - 1;
-		if (*block_state == FREE && ((*next_block_state == FREE) ||
+		if (*block_state == FREE && ((*next_block_state == FREE) || \
 				(*next_block_state == TAIL)))
 		{
 			*block_state = *next_block_state;
 			*block_size += *(block_size + 3);
 			if (*next_block_state == FREE)
-				ft_memmove((void*)(block_size + 3), (void*)(block_size + 6), \
-							(size_t)(*(*map + 1) - ((block_size + 6) - *map)));
+			{
+				ft_memmove((void *)(block_size + 3), (void *)(block_size + 6), \
+					(size_t)(*(*map + 1) - ((block_size + 6) - *map)));
+			}
 		}
 		else
 			block_state = next_block_state;
