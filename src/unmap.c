@@ -6,11 +6,12 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:06:56 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 10:18:52 by rklein           ###   ########.fr       */
+/*   Updated: 2021/10/26 12:45:39 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
+#include <stdio.h>
 
 void	ft_unmap(unsigned long **map)
 {
@@ -24,7 +25,11 @@ void	ft_unmap(unsigned long **map)
 		if (*(current + 4) == TAIL)
 		{
 			if (prev == NULL)
-				*map = (unsigned long *)*(*map + 2);
+			{
+				if (*(*map + 2) == 0)
+					break ;
+				*map = (unsigned long *)(*(*map + 2));
+			}
 			else
 				*(prev + 2) = *(current + 2);
 			munmap(current, *current);
