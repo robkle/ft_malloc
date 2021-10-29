@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:04:18 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/14 13:27:48 by rklein           ###   ########.fr       */
+/*   Updated: 2021/10/25 16:14:18 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ void	ft_free_block(unsigned long	*ptr)
 	ft_memset((void *)*ptr, 0, *block_size);
 }
 
-void	ft_free(void *ptr)
+void	free(void *ptr)
 {
 	unsigned long	*map;
 	unsigned long	*meta;
 
 	if (!ptr)
 		return ;
+	//mutex
 	map = ft_find_map(ptr);
 	if (map)
 	{
@@ -43,4 +44,5 @@ void	ft_free(void *ptr)
 				ft_free_map(*map);
 		}
 	}
+	//mutex
 }

@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 10:55:50 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 16:49:36 by rklein           ###   ########.fr       */
+/*   Updated: 2021/10/29 14:26:45 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@
 # define TINY 256
 # define SMALL PAGE
 //# define N TINY * 256 //65536 (32768 meta 32768 memory)
-//# define M SMALL * 140 //573440 (49152 meta 524288 memory) 
-# define N 65536
-# define M 573440 
+//# define M SMALL * 140 //573440 (49152 meta 524288 memory)
+//# define N 65536
+//# define M 573440 
+//NEW TINY 53248 (24576 meta 28672 memory)
+//NEW SMALL 446464 (36864 meta 4096600 memory) 
+# define N 53248
+# define M 446464 
 # define FREE 0
 # define INUSE 1
 # define TAIL 2
@@ -39,17 +43,17 @@ typedef struct s_zone
 }			t_zone;
 
 t_zone			g_zone;
+pthread_mutex_t		g_mutex;
 
 /*
 ** malloc.c
 */
-void			*ft_malloc(size_t size);
+void			*malloc(size_t size);
 void			ft_get_zone(size_t size, size_t *map_size, \
 					unsigned long ***mem);
 void			*ft_add_block(unsigned long **mem, size_t size, \
 					size_t map_size);
-void			*ft_append_block(unsigned long **mem, unsigned long **block, \
-					size_t size, size_t map_size);
+void			*ft_append_block(unsigned long **block, size_t size);
 void			*ft_insert_block(unsigned long **mem, unsigned long **block, \
 				size_t size);
 
@@ -62,12 +66,13 @@ int			ft_size_limit(size_t size);
 ** map.c
 */
 void			ft_initiate_page(unsigned long **mem, size_t map_size);
-void			ft_append_page(unsigned long **mem, size_t map_size);
+void			*ft_append_page(unsigned long **mem, size_t map_size, \
+				size_t size);
 
 /*
 ** free.c
 */
-void			ft_free(void *ptr);
+void			free(void *ptr);
 void			ft_free_block(unsigned long *ptr);
 
 /*
@@ -93,7 +98,7 @@ void			ft_free_map(unsigned long map_size);
 */
 void			ft_copy_from_swap(void *ptr, unsigned long **swap);
 void			ft_copy_to_swap(unsigned long *meta, unsigned long **swap);
-void			*ft_realloc(void *ptr, size_t size);
+void			*realloc(void *ptr, size_t size);
 
 /*
 ** show.c

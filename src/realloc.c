@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:05:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 10:11:09 by rklein           ###   ########.fr       */
+/*   Updated: 2021/10/24 11:48:37 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	ft_copy_to_swap(unsigned long *meta, unsigned long **swap)
 	ft_memcpy((void *)(*swap + 2), (void *)*meta, *(meta - 2));
 }
 
-void	*ft_realloc(void *ptr, size_t size)
+void	*realloc(void *ptr, size_t size)
 {
 	unsigned long	*map;
 	unsigned long	*meta;
 	unsigned long	*swap;	
 
 	if (ptr == NULL)
-		return (ft_malloc(size));
+		return (malloc(size));
 	map = ft_find_map(ptr);
 	if (map)
 	{
@@ -48,7 +48,7 @@ void	*ft_realloc(void *ptr, size_t size)
 			ft_copy_to_swap(meta, &swap);
 			ft_free_block(meta);
 			ft_defragment(&map);
-			ptr = ft_malloc(size);
+			ptr = malloc(size);
 			if (*(map + 4) == TAIL)
 				ft_free_map(*map);
 			ft_copy_from_swap(ptr, &swap);

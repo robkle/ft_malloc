@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:04:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 13:18:54 by rklein           ###   ########.fr       */
+/*   Updated: 2021/10/29 14:26:11 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,11 @@ void	*ft_insert_block(unsigned long **mem, unsigned long **block, \
 	return (ptr);
 }
 
-void	*ft_append_block(unsigned long **mem, unsigned long **block, \
-			size_t size, size_t map_size)
+void	*ft_append_block(unsigned long **block, size_t size)
 {
 	size_t	alloc_size;
 
 	alloc_size = (size + 31) & -32;
-	if (**block < alloc_size)
-	{
-		ft_append_page(mem, map_size);
-		*block = (unsigned long *)*(*mem + 2) + 3;
-	}
 	*(*block + 3) = **block - alloc_size;
 	*(*block + 4) = TAIL;
 	*(*block + 5) = *(*block + 2) + alloc_size;
@@ -60,19 +54,29 @@ void	*ft_append_block(unsigned long **mem, unsigned long **block, \
 
 void	*ft_add_block(unsigned long **mem, size_t size, size_t map_size)
 {
-	unsigned long	*block_size;
-	unsigned long	*block_state;
-
-	block_size = *mem + 3;
-	block_state = *mem + 4;
-	while (1)
+	unsigned long	*block;
+	unsigned long 	*current;
+	
+	block = *mem + 3;
+	current = *mem;
+	while (current)
 	{
-		if (*block_state == FREE && ((size + 31) & -32) <= *block_size)
-			return (ft_insert_block(mem, &block_size, size));
-		else if (*block_state == TAIL)
-			return (ft_append_block(mem, &block_size, size, map_size));
-		block_size = block_size + 3;
-		block_state = block_state + 3;
+		if (*(block + 1) == FREE && ((size + 31) & -32) <= *block)
+			return (ft_insert_block(mem, &block, size));
+		if (*(block + 1) == TAIL && ((size + 31) & -32) < *block)
+			return (ft_append_block(&block, size));
+		if (*(block + 1) == TAIL && ((size + 31) & -32) >= *block)
+		{
+			if (*(current + 2))
+			{
+				current = (unsigned long *)*(current + 2);
+				block = current + 3;
+			}
+			else
+				return (ft_append_page(&current, map_size, size));
+		}
+		else
+			block = block + 3;
 	}
 	return (NULL);
 }
@@ -99,7 +103,7 @@ void	ft_get_zone(size_t size, size_t *map_size, unsigned long ***mem)
 	}
 }
 
-void	*ft_malloc(size_t size)
+void	*malloc(size_t size)
 {
 	unsigned long	**mem;
 	size_t			map_size;
@@ -109,7 +113,8 @@ void	*ft_malloc(size_t size)
 		return (NULL);
 	ft_get_zone(size, &map_size, &mem);
 	if (!(*mem))
-		ft_initiate_page(mem, map_size);
+		ft_initiate_page(mem, map_size); //try *mem
 	ptr = ft_add_block(mem, size, map_size);
 	return (ptr);
+	
 }
