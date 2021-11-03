@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:04:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/29 14:26:11 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:22:05 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,32 @@ void	ft_get_zone(size_t size, size_t *map_size, unsigned long ***mem)
 	}
 }
 
+void	*ft_alloc(size_t size)
+{
+	unsigned long	**mem;
+	size_t			map_size;
+
+	ft_get_zone(size, &map_size, &mem);
+	if (!(*mem))
+		ft_initiate_page(mem, map_size);
+	return (ft_add_block(mem, size, map_size));
+}
+
+
 void	*malloc(size_t size)
+{
+	void			*ptr;
+
+	if (ft_size_limit(size) == 0)
+		return (NULL);
+	pthread_mutex_lock(&g_mutex);
+	ptr = ft_alloc(size);
+	pthread_mutex_unlock(&g_mutex);
+	return (ptr);
+	
+}
+
+/*void	*malloc(size_t size)
 {
 	unsigned long	**mem;
 	size_t			map_size;
@@ -113,8 +138,8 @@ void	*malloc(size_t size)
 		return (NULL);
 	ft_get_zone(size, &map_size, &mem);
 	if (!(*mem))
-		ft_initiate_page(mem, map_size); //try *mem
+		ft_initiate_page(mem, map_size);
 	ptr = ft_add_block(mem, size, map_size);
 	return (ptr);
 	
-}
+}*/

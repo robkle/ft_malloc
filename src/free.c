@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:04:18 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/25 16:14:18 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/03 11:55:29 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free(void *ptr)
 
 	if (!ptr)
 		return ;
-	//mutex
+	pthread_mutex_lock(&g_mutex);
 	map = ft_find_map(ptr);
 	if (map)
 	{
@@ -44,5 +44,5 @@ void	free(void *ptr)
 				ft_free_map(*map);
 		}
 	}
-	//mutex
+	pthread_mutex_unlock(&g_mutex);
 }

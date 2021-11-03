@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:05:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/24 11:48:37 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/03 17:31:49 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,42 @@ void	ft_copy_to_swap(unsigned long *meta, unsigned long **swap)
 	ft_memcpy((void *)(*swap + 2), (void *)*meta, *(meta - 2));
 }
 
-void	*realloc(void *ptr, size_t size)
+void	*ft_find_free_alloc(void *ptr, size_t size)
+{
+	unsigned long	*map;
+	unsigned long	*meta;
+	unsigned long	*swap;	
+
+	map = ft_find_map(ptr);
+	if (map)
+	{
+		meta = ft_valid_ptr(&map, ptr);
+		if (meta)
+		{
+			ft_copy_to_swap(meta, &swap);
+			ft_free_block(meta);
+			ft_defragment(&map);
+			ptr = ft_alloc(size);
+			if (*(map + 4) == TAIL)
+				ft_free_map(*map);
+			ft_copy_from_swap(ptr, &swap);
+			return (ptr);
+		}
+	}
+	return (NULL);
+}
+
+void	*realloc(void* ptr, size_t size)
+{
+	if (ptr == NULL)
+		return (malloc(size));
+	pthread_mutex_lock(&g_mutex);
+	ptr = ft_find_free_alloc(ptr, size);
+	pthread_mutex_unlock(&g_mutex);
+	return (ptr);
+}
+
+/*void	*realloc(void *ptr, size_t size)
 {
 	unsigned long	*map;
 	unsigned long	*meta;
@@ -56,4 +91,5 @@ void	*realloc(void *ptr, size_t size)
 		}
 	}
 	return (NULL);
-}
+}*/
+
