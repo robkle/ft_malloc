@@ -1,5 +1,5 @@
 compile
 main.c
-./tests
+tests
 .gitignore
 notes
