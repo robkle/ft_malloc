@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:05:49 by rklein            #+#    #+#             */
-/*   Updated: 2021/11/03 11:56:03 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/05 14:06:35 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	print_alloc_mem(char *zone, unsigned long *mem, size_t *total)
 void	show_alloc_mem(void)
 {
 	size_t	total;
-	
+
 	pthread_mutex_lock(&g_mutex);
 	total = 0;
 	print_alloc_mem("TINY", g_zone.tiny, &total);

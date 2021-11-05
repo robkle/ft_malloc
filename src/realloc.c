@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:05:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/11/03 17:31:49 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/05 15:04:13 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*ft_find_free_alloc(void *ptr, size_t size)
 	return (NULL);
 }
 
-void	*realloc(void* ptr, size_t size)
+void	*realloc(void *ptr, size_t size)
 {
 	if (ptr == NULL)
 		return (malloc(size));
@@ -65,31 +65,3 @@ void	*realloc(void* ptr, size_t size)
 	pthread_mutex_unlock(&g_mutex);
 	return (ptr);
 }
-
-/*void	*realloc(void *ptr, size_t size)
-{
-	unsigned long	*map;
-	unsigned long	*meta;
-	unsigned long	*swap;	
-
-	if (ptr == NULL)
-		return (malloc(size));
-	map = ft_find_map(ptr);
-	if (map)
-	{
-		meta = ft_valid_ptr(&map, ptr);
-		if (meta)
-		{
-			ft_copy_to_swap(meta, &swap);
-			ft_free_block(meta);
-			ft_defragment(&map);
-			ptr = malloc(size);
-			if (*(map + 4) == TAIL)
-				ft_free_map(*map);
-			ft_copy_from_swap(ptr, &swap);
-			return (ptr);
-		}
-	}
-	return (NULL);
-}*/
-

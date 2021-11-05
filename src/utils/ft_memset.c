@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:41:41 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 15:41:54 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/05 14:12:54 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_memset(void *b, int c, size_t len)
 	unsigned char	*str;
 	size_t			i;
 
-	str = (unsigned char*)b;
+	str = (unsigned char *)b;
 	i = 0;
 	while (i < len)
 	{

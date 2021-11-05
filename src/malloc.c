@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:04:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/11/03 17:22:05 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/05 15:03:56 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	*ft_append_block(unsigned long **block, size_t size)
 void	*ft_add_block(unsigned long **mem, size_t size, size_t map_size)
 {
 	unsigned long	*block;
-	unsigned long 	*current;
-	
+	unsigned long	*current;
+
 	block = *mem + 3;
 	current = *mem;
 	while (current)
@@ -81,28 +81,6 @@ void	*ft_add_block(unsigned long **mem, size_t size, size_t map_size)
 	return (NULL);
 }
 
-void	ft_get_zone(size_t size, size_t *map_size, unsigned long ***mem)
-{
-	size_t	alloc_size;
-
-	alloc_size = (size + 31) & -32;
-	if (alloc_size <= TINY)
-	{
-		*mem = &g_zone.tiny;
-		*map_size = N;
-	}
-	else if (alloc_size <= SMALL)
-	{
-		*mem = &g_zone.small;
-		*map_size = M;
-	}
-	else
-	{
-		*mem = &g_zone.large;
-		*map_size = (alloc_size + 128 + (PAGE - 1)) & -PAGE;
-	}
-}
-
 void	*ft_alloc(size_t size)
 {
 	unsigned long	**mem;
@@ -114,7 +92,6 @@ void	*ft_alloc(size_t size)
 	return (ft_add_block(mem, size, map_size));
 }
 
-
 void	*malloc(size_t size)
 {
 	void			*ptr;
@@ -125,21 +102,4 @@ void	*malloc(size_t size)
 	ptr = ft_alloc(size);
 	pthread_mutex_unlock(&g_mutex);
 	return (ptr);
-	
 }
-
-/*void	*malloc(size_t size)
-{
-	unsigned long	**mem;
-	size_t			map_size;
-	void			*ptr;
-
-	if (ft_size_limit(size) == 0)
-		return (NULL);
-	ft_get_zone(size, &map_size, &mem);
-	if (!(*mem))
-		ft_initiate_page(mem, map_size);
-	ptr = ft_add_block(mem, size, map_size);
-	return (ptr);
-	
-}*/

@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:05:03 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/29 13:47:34 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/05 14:05:29 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ void	ft_initiate_page(unsigned long **mem, size_t map_size)
 		*(*mem + 1) = (unsigned long)36864;
 	else
 		*(*mem + 1) = (unsigned long)128;
-/*	if (map_size == N)
-		*(*mem + 1) = (unsigned long)32768;
-	else if (map_size == M)
-		*(*mem + 1) = (unsigned long)49152;
-	else
-		*(*mem + 1) = (unsigned long)128; */
 	*(*mem + 2) = (unsigned long)0x0;
 	*(*mem + 3) = (unsigned long)(map_size - (*(*mem + 1)));
 	*(*mem + 4) = (unsigned long)TAIL;
@@ -44,5 +38,4 @@ void	*ft_append_page(unsigned long **mem, size_t map_size, size_t size)
 	*(*mem + 2) = (unsigned long)new;
 	block = new + 3;
 	return (ft_append_block(&block, size));
-	
 }

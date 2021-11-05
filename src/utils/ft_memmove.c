@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 15:41:04 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 15:41:22 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/05 14:13:18 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	unsigned char	*s;
 	size_t			i;
 
-	d = (unsigned char*)dst;
-	s = (unsigned char*)src;
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
 	i = 0;
 	if (d < s)
 		ft_memcpy(dst, src, len);

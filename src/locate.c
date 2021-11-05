@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:04:28 by rklein            #+#    #+#             */
-/*   Updated: 2021/10/15 10:32:13 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/05 14:17:20 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,26 @@ unsigned long	*ft_find_map(void *ptr)
 			map = ft_scan_map(&g_zone.large, ptr);
 	}
 	return (map);
+}
+
+void	ft_get_zone(size_t size, size_t *map_size, unsigned long ***mem)
+{
+	size_t	alloc_size;
+
+	alloc_size = (size + 31) & -32;
+	if (alloc_size <= TINY)
+	{
+		*mem = &g_zone.tiny;
+		*map_size = N;
+	}
+	else if (alloc_size <= SMALL)
+	{
+		*mem = &g_zone.small;
+		*map_size = M;
+	}
+	else
+	{
+		*mem = &g_zone.large;
+		*map_size = (alloc_size + 128 + (PAGE - 1)) & -PAGE;
+	}
 }

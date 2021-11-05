@@ -1,0 +1,1 @@
+LD_PRELOAD=/home/robkle/Projects/ft_malloc/libft_malloc.so /usr/bin/time -v ./test2
