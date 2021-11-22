@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/11/10 10:25:13 by rklein            #+#    #+#              #
+#    Updated: 2021/11/11 11:22:05 by rklein           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
@@ -47,9 +59,9 @@ clean :
 	@rm -rf $(OBJ_DIR)
 
 fclean : clean
-	@rm $(NAME)
-	@rm $(HOSTLIB)
-
+	@rm -f $(NAME)
+	@rm -f libft_malloc_*.so
+	
 re : fclean all
 
 .PHONY : all clean fclean re

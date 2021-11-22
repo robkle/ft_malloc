@@ -6,7 +6,7 @@
 /*   By: rklein <rklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:04:39 by rklein            #+#    #+#             */
-/*   Updated: 2021/11/05 15:03:56 by rklein           ###   ########.fr       */
+/*   Updated: 2021/11/10 13:14:16 by rklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	*ft_insert_block(unsigned long **mem, unsigned long **block, \
 	void	*ptr;
 	size_t	alloc_size;
 
+	alloc_size = (size + 31) & -32;
 	if (**block == alloc_size)
 	{
 		**block = size;
